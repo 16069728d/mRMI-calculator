@@ -30,3 +30,186 @@
   <script src="script.js"></script>
 </body>
 </html>
+// 8-item mRMI definition (replace placeholder 'text' with official item prompts you have rights to use)
+const ITEMS = [
+  { id: 'item1', text: 'Item 1 prompt (replace with official text)', max: 2, reverse: false },
+  { id: 'item2', text: 'Item 2 prompt (replace with official text)', max: 2, reverse: false },
+  { id: 'item3', text: 'Item 3 prompt (replace with official text)', max: 2, reverse: false },
+  { id: 'item4', text: 'Item 4 prompt (replace with official text)', max: 2, reverse: true  }, // example reverse
+  { id: 'item5', text: 'Item 5 prompt (replace with official text)', max: 1, reverse: false },
+  { id: 'item6', text: 'Item 6 prompt (replace with official text)', max: 1, reverse: false },
+  { id: 'item7', text: 'Item 7 prompt (replace with official text)', max: 1, reverse: true  },
+  { id: 'item8', text: 'Item 8 prompt (replace with official text)', max: 1, reverse: false }
+];
+
+// Optional: allow partial completion (true to allow, false to require all answered)
+const ALLOW_PARTIAL = false;
+
+function renderItems() {
+  const container = document.getElementById('items');
+  ITEMS.forEach(it => {
+    const section = document.createElement('div');
+    section.className = 'item';
+
+    const label = document.createElement('label');
+    label.htmlFor = it.id;
+    label.textContent = it.text;
+
+    const select = document.createElement('select');
+    select.id = it.id;
+    // Build options from 0 up to max
+    for (let s = 0; s <= it.max; s++) {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = String(s);
+      select.appendChild(opt);
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'item-row';
+    wrapper.appendChild(label);
+    wrapper.appendChild(select);
+
+    section.appendChild(wrapper);
+    container.appendChild(section);
+  });
+}
+
+function calculateScore() {
+  let total = 0;
+  let maxTotal = 0;
+  let missing = [];
+
+  for (const it of ITEMS) {
+    const el = document.getElementById(it.id);
+    const valStr = el?.value;
+    if (valStr === undefined || valStr === '') {
+      missing.push(it.id);
+      continue;
+    }
+    const val = parseInt(valStr, 10);
+    // clamp just in case
+    const safeVal = Math.min(it.max, Math.max(0, val));
+
+    // reverse scoring if needed
+    const score = it.reverse ? (it.max - safeVal) : safeVal;
+
+    total += score;
+    maxTotal += it.max;
+  }
+
+  const resultsSection = document.getElementById('results');
+  const totalDisplay = document.getElementById('totalDisplay');
+  const maxDisplay = document.getElementById('maxDisplay');
+  const missingDisplay = document.getElementById('missingDisplay');
+
+  if (missing.length > 0) {
+    if (ALLOW_PARTIAL) {
+      // If partials are allowed, you could compute a proportional score.
+      // For simplicity, we'll block partials here and show a warning.
+      resultsSection.hidden = false;
+      missingDisplay.textContent = `Please answer all items. Missing: ${missing.length} item(s).`;
+      missingDisplay.hidden = false;
+      totalDisplay.textContent = '';
+      maxDisplay.textContent = '';
+    } else {
+      // Require full completion
+      resultsSection.hidden = false;
+      missingDisplay.textContent = `Please answer all items before scoring. Missing: ${missing.length} item(s).`;
+      missingDisplay.hidden = false;
+      totalDisplay.textContent = '';
+      maxDisplay.textContent = '';
+    }
+    return;
+  }
+
+  resultsSection.hidden = false;
+  totalDisplay.textContent = `Total score: ${total} / ${maxTotal}`;
+  maxDisplay.textContent = `Maximum possible: ${maxTotal}`;
+
+  missingDisplay.hidden = true;
+}
+
+function resetForm() {
+  ITEMS.forEach(it => {
+    const el = document.getElementById(it.id);
+    if (el) el.value = '';
+  });
+  const resultsSection = document.getElementById('results');
+  resultsSection.hidden = true;
+}
+
+function exportCSV() {
+  // Build a simple CSV with one row: each item score, plus total
+  let header = ITEMS.map(it => it.id).join(',');
+  // For accessibility, include a total column
+  header += ',Total,Max';
+  let row = ITEMS.map(it => {
+    const el = document.getElementById(it.id);
+    const val = el?.value ?? '';
+    // Apply reverse in output to reflect the displayed score per item
+    const v = parseInt(val, 10);
+    if (Number.isFinite(v)) {
+      const score = it.reverse ? (it.max - v) : v;
+      return String(score);
+    }
+    return '';
+  }).join(',');
+
+  // Compute max total
+  const maxTotal = ITEMS.reduce((acc, it) => acc + it.max, 0);
+  // Current total (recompute for reliability)
+  let total = 0;
+  for (const it of ITEMS) {
+    const el = document.getElementById(it.id);
+    const v = parseInt(el?.value, 10);
+    if (Number.isFinite(v)) {
+      total += it.reverse ? (it.max - v) : v;
+    }
+  }
+
+  row += `,${total},${maxTotal}`;
+
+  const blob = new Blob([header + "\n" + row], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'mRMI_8_items_scores.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderItems();
+
+  document.getElementById('calculateBtn').addEventListener('click', calculateScore);
+  document.getElementById('resetBtn').addEventListener('click', resetForm);
+  document.getElementById('exportBtn').addEventListener('click', exportCSV);
+});
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --accent: #4f46e5;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto; background: var(--bg); color: var(--text); }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.item { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #fff; }
+.item-row { display: flex; flex-direction: column; }
+.item-row label { font-weight: 600; margin-bottom: 6px; }
+.item-row select { width: 120px; padding: 6px; font-size: 1rem; }
+
+.controls { display: flex; gap: 0.75rem; margin: 1rem 0; }
+button { padding: 0.6rem 1rem; border: 0; border-radius: 6px; background: var(--accent); color: white; cursor: pointer; }
+button:hover { background: #4338ca; }
+.results { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; background: #fff; }
+.warning { color: #b91c1c; font-weight: 600; }
+@media (max-width: 600px) {
+  .controls { flex-direction: column; }
+}
+

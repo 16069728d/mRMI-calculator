@@ -13,7 +13,22 @@
         .points { display: flex; flex-direction: column; }
         .point { display: flex; align-items: center; cursor: pointer; }
         input[type="radio"] { margin-right: 10px; }
-        button { padding: 10px 15px; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+        button { 
+            padding: 15px 25px; 
+            font-size: 16px; 
+            background-color: #007BFF; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        button:hover { 
+            background-color: #0056b3; 
+        }
         h2 { margin-top: 20px; text-align: center; }
     </style>
 </head>
@@ -26,7 +41,7 @@
                 <label for="q1">1. Turning Over</label>
                 <div class="points">
                     <div class="point">
-                        <input type="radio" name="q1" value="0" onclick="selectPoint(1, 0)"> 
+                        <input type="radio" name="q1" value="0" onclick="selectPoint(1, 0); zeroOthers(1)"> 
                         <span>0: Unable to perform</span>
                     </div>
                     <div class="point">
@@ -270,6 +285,18 @@
     </div>
 
     <script>
+        function selectPoint(question, value) {
+            document.getElementById("q" + question).value = value;
+        }
+
+        function zeroOthers(question) {
+            for (let i = 2; i <= 8; i++) {
+                const radioButtons = document.getElementsByName("q" + i);
+                radioButtons.forEach(rb => rb.checked = false); // Uncheck all
+                document.getElementById("q" + i).value = 0; // Automatically zero the value
+            }
+        }
+
         function calculateScore() {
             let total = 0;
 

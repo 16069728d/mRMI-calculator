@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>8-item mRMI Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <h1>8-item Modified Rivermead Mobility Index (mRMI) Calculator</h1>
+    <p>Enter/select a score for each item. Some items may be reverse-scored depending on the instrument version you’re using.</p>
+
+    <section id="items"></section>
+
+    <div class="controls">
+      <button id="calculateBtn" type="button">Calculate total score</button>
+      <button id="resetBtn" type="button">Reset</button>
+      <button id="exportBtn" type="button">Export CSV</button>
+    </div>
+
+    <section id="results" aria-live="polite" class="results" hidden>
+      <h2>Results</h2>
+      <p id="totalDisplay"></p>
+      <p id="maxDisplay"></p>
+      <p id="missingDisplay" class="warning" hidden></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

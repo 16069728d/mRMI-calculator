@@ -1,215 +1,285 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>8-item mRMI Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modified Rivermead Mobility Index (MRMI) Questionnaire</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        h1 { text-align: center; }
+        .question { margin: 20px 0; }
+        label { display: block; margin-bottom: 10px; }
+        .points { display: flex; flex-direction: column; }
+        .point { display: flex; align-items: center; cursor: pointer; }
+        input[type="radio"] { margin-right: 10px; }
+        button { padding: 10px 15px; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+        h2 { margin-top: 20px; text-align: center; }
+    </style>
 </head>
 <body>
-  <main>
-    <h1>8-item Modified Rivermead Mobility Index (mRMI) Calculator</h1>
-    <p>Enter/select a score for each item. Some items may be reverse-scored depending on the instrument version you’re using.</p>
+    <div class="container">
+        <h1>Modified Rivermead Mobility Index (MRMI)</h1>
 
-    <section id="items"></section>
+        <form id="mrmiForm">
+            <div class="question">
+                <label for="q1">1. Turning Over</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q1" value="0" onclick="selectPoint(1, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q1" value="1" onclick="selectPoint(1, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q1" value="2" onclick="selectPoint(1, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q1" value="3" onclick="selectPoint(1, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q1" value="4" onclick="selectPoint(1, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q1" value="5" onclick="selectPoint(1, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q1" value="0">
+            </div>
+            <div class="question">
+                <label for="q2">2. Lying to Sitting</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q2" value="0" onclick="selectPoint(2, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q2" value="1" onclick="selectPoint(2, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q2" value="2" onclick="selectPoint(2, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q2" value="3" onclick="selectPoint(2, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q2" value="4" onclick="selectPoint(2, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q2" value="5" onclick="selectPoint(2, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q2" value="0">
+            </div>
+            <div class="question">
+                <label for="q3">3. Sitting Balance</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q3" value="0" onclick="selectPoint(3, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q3" value="1" onclick="selectPoint(3, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q3" value="2" onclick="selectPoint(3, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q3" value="3" onclick="selectPoint(3, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q3" value="4" onclick="selectPoint(3, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q3" value="5" onclick="selectPoint(3, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q3" value="0">
+            </div>
+            <div class="question">
+                <label for="q4">4. Sitting to Standing</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q4" value="0" onclick="selectPoint(4, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q4" value="1" onclick="selectPoint(4, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q4" value="2" onclick="selectPoint(4, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q4" value="3" onclick="selectPoint(4, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q4" value="4" onclick="selectPoint(4, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q4" value="5" onclick="selectPoint(4, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q4" value="0">
+            </div>
+            <div class="question">
+                <label for="q5">5. Standing</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q5" value="0" onclick="selectPoint(5, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q5" value="1" onclick="selectPoint(5, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q5" value="2" onclick="selectPoint(5, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q5" value="3" onclick="selectPoint(5, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q5" value="4" onclick="selectPoint(5, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q5" value="5" onclick="selectPoint(5, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q5" value="0">
+            </div>
+            <div class="question">
+                <label for="q6">6. Transfers</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q6" value="0" onclick="selectPoint(6, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q6" value="1" onclick="selectPoint(6, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q6" value="2" onclick="selectPoint(6, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q6" value="3" onclick="selectPoint(6, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q6" value="4" onclick="selectPoint(6, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q6" value="5" onclick="selectPoint(6, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q6" value="0">
+            </div>
+            <div class="question">
+                <label for="q7">7. Walking Indoors</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q7" value="0" onclick="selectPoint(7, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q7" value="1" onclick="selectPoint(7, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q7" value="2" onclick="selectPoint(7, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q7" value="3" onclick="selectPoint(7, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q7" value="4" onclick="selectPoint(7, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q7" value="5" onclick="selectPoint(7, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q7" value="0">
+            </div>
+            <div class="question">
+                <label for="q8">8. Stairs</label>
+                <div class="points">
+                    <div class="point">
+                        <input type="radio" name="q8" value="0" onclick="selectPoint(8, 0)"> 
+                        <span>0: Unable to perform</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q8" value="1" onclick="selectPoint(8, 1)"> 
+                        <span>1: Assistance of 2 people</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q8" value="2" onclick="selectPoint(8, 2)"> 
+                        <span>2: Assistance of 1 person</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q8" value="3" onclick="selectPoint(8, 3)"> 
+                        <span>3: Requires supervision or verbal instruction</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q8" value="4" onclick="selectPoint(8, 4)"> 
+                        <span>4: Requires an aid or appliance</span>
+                    </div>
+                    <div class="point">
+                        <input type="radio" name="q8" value="5" onclick="selectPoint(8, 5)"> 
+                        <span>5: Independent</span>
+                    </div>
+                </div>
+                <input type="hidden" id="q8" value="0">
+            </div>
 
-    <div class="controls">
-      <button id="calculateBtn" type="button">Calculate total score</button>
-      <button id="resetBtn" type="button">Reset</button>
-      <button id="exportBtn" type="button">Export CSV</button>
+            <button type="button" onclick="calculateScore()">Calculate Score</button>
+        </form>
+
+        <h2 id="result"></h2>
     </div>
 
-    <section id="results" aria-live="polite" class="results" hidden>
-      <h2>Results</h2>
-      <p id="totalDisplay"></p>
-      <p id="maxDisplay"></p>
-      <p id="missingDisplay" class="warning" hidden></p>
-    </section>
-  </main>
+    <script>
+        function calculateScore() {
+            let total = 0;
 
-  <script src="script.js"></script>
+            for (let i = 1; i <= 8; i++) {
+                const selectedValue = document.querySelector('input[name="q' + i + '"]:checked');
+                total += selectedValue ? parseInt(selectedValue.value) : 0;
+            }
+
+            document.getElementById('result').innerText = 'Your MRMI Score: ' + total;
+        }
+    </script>
 </body>
 </html>
-// 8-item mRMI definition (replace placeholder 'text' with official item prompts you have rights to use)
-const ITEMS = [
-  { id: 'item1', text: 'Item 1 prompt (replace with official text)', max: 2, reverse: false },
-  { id: 'item2', text: 'Item 2 prompt (replace with official text)', max: 2, reverse: false },
-  { id: 'item3', text: 'Item 3 prompt (replace with official text)', max: 2, reverse: false },
-  { id: 'item4', text: 'Item 4 prompt (replace with official text)', max: 2, reverse: true  }, // example reverse
-  { id: 'item5', text: 'Item 5 prompt (replace with official text)', max: 1, reverse: false },
-  { id: 'item6', text: 'Item 6 prompt (replace with official text)', max: 1, reverse: false },
-  { id: 'item7', text: 'Item 7 prompt (replace with official text)', max: 1, reverse: true  },
-  { id: 'item8', text: 'Item 8 prompt (replace with official text)', max: 1, reverse: false }
-];
-
-// Optional: allow partial completion (true to allow, false to require all answered)
-const ALLOW_PARTIAL = false;
-
-function renderItems() {
-  const container = document.getElementById('items');
-  ITEMS.forEach(it => {
-    const section = document.createElement('div');
-    section.className = 'item';
-
-    const label = document.createElement('label');
-    label.htmlFor = it.id;
-    label.textContent = it.text;
-
-    const select = document.createElement('select');
-    select.id = it.id;
-    // Build options from 0 up to max
-    for (let s = 0; s <= it.max; s++) {
-      const opt = document.createElement('option');
-      opt.value = s;
-      opt.textContent = String(s);
-      select.appendChild(opt);
-    }
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'item-row';
-    wrapper.appendChild(label);
-    wrapper.appendChild(select);
-
-    section.appendChild(wrapper);
-    container.appendChild(section);
-  });
-}
-
-function calculateScore() {
-  let total = 0;
-  let maxTotal = 0;
-  let missing = [];
-
-  for (const it of ITEMS) {
-    const el = document.getElementById(it.id);
-    const valStr = el?.value;
-    if (valStr === undefined || valStr === '') {
-      missing.push(it.id);
-      continue;
-    }
-    const val = parseInt(valStr, 10);
-    // clamp just in case
-    const safeVal = Math.min(it.max, Math.max(0, val));
-
-    // reverse scoring if needed
-    const score = it.reverse ? (it.max - safeVal) : safeVal;
-
-    total += score;
-    maxTotal += it.max;
-  }
-
-  const resultsSection = document.getElementById('results');
-  const totalDisplay = document.getElementById('totalDisplay');
-  const maxDisplay = document.getElementById('maxDisplay');
-  const missingDisplay = document.getElementById('missingDisplay');
-
-  if (missing.length > 0) {
-    if (ALLOW_PARTIAL) {
-      // If partials are allowed, you could compute a proportional score.
-      // For simplicity, we'll block partials here and show a warning.
-      resultsSection.hidden = false;
-      missingDisplay.textContent = `Please answer all items. Missing: ${missing.length} item(s).`;
-      missingDisplay.hidden = false;
-      totalDisplay.textContent = '';
-      maxDisplay.textContent = '';
-    } else {
-      // Require full completion
-      resultsSection.hidden = false;
-      missingDisplay.textContent = `Please answer all items before scoring. Missing: ${missing.length} item(s).`;
-      missingDisplay.hidden = false;
-      totalDisplay.textContent = '';
-      maxDisplay.textContent = '';
-    }
-    return;
-  }
-
-  resultsSection.hidden = false;
-  totalDisplay.textContent = `Total score: ${total} / ${maxTotal}`;
-  maxDisplay.textContent = `Maximum possible: ${maxTotal}`;
-
-  missingDisplay.hidden = true;
-}
-
-function resetForm() {
-  ITEMS.forEach(it => {
-    const el = document.getElementById(it.id);
-    if (el) el.value = '';
-  });
-  const resultsSection = document.getElementById('results');
-  resultsSection.hidden = true;
-}
-
-function exportCSV() {
-  // Build a simple CSV with one row: each item score, plus total
-  let header = ITEMS.map(it => it.id).join(',');
-  // For accessibility, include a total column
-  header += ',Total,Max';
-  let row = ITEMS.map(it => {
-    const el = document.getElementById(it.id);
-    const val = el?.value ?? '';
-    // Apply reverse in output to reflect the displayed score per item
-    const v = parseInt(val, 10);
-    if (Number.isFinite(v)) {
-      const score = it.reverse ? (it.max - v) : v;
-      return String(score);
-    }
-    return '';
-  }).join(',');
-
-  // Compute max total
-  const maxTotal = ITEMS.reduce((acc, it) => acc + it.max, 0);
-  // Current total (recompute for reliability)
-  let total = 0;
-  for (const it of ITEMS) {
-    const el = document.getElementById(it.id);
-    const v = parseInt(el?.value, 10);
-    if (Number.isFinite(v)) {
-      total += it.reverse ? (it.max - v) : v;
-    }
-  }
-
-  row += `,${total},${maxTotal}`;
-
-  const blob = new Blob([header + "\n" + row], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'mRMI_8_items_scores.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderItems();
-
-  document.getElementById('calculateBtn').addEventListener('click', calculateScore);
-  document.getElementById('resetBtn').addEventListener('click', resetForm);
-  document.getElementById('exportBtn').addEventListener('click', exportCSV);
-});
-:root {
-  --bg: #f6f7fb;
-  --card: #ffffff;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --accent: #4f46e5;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto; background: var(--bg); color: var(--text); }
-main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.item { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #fff; }
-.item-row { display: flex; flex-direction: column; }
-.item-row label { font-weight: 600; margin-bottom: 6px; }
-.item-row select { width: 120px; padding: 6px; font-size: 1rem; }
-
-.controls { display: flex; gap: 0.75rem; margin: 1rem 0; }
-button { padding: 0.6rem 1rem; border: 0; border-radius: 6px; background: var(--accent); color: white; cursor: pointer; }
-button:hover { background: #4338ca; }
-.results { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; background: #fff; }
-.warning { color: #b91c1c; font-weight: 600; }
-@media (max-width: 600px) {
-  .controls { flex-direction: column; }
-}
-
